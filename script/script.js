@@ -148,16 +148,7 @@ window.addEventListener("load", () => {
 
   if (location.pathname === "/99-mobiles/pages/user/cart.html") {
     if (sessionStorage.getItem("cid")) {
-      if (localStorage.getItem("cart")) {
-        const cartlist = JSON.parse(localStorage.getItem("cart"));
-
-        const fildered_cartlist = cartlist.filter(
-          (c) => c.userId === parseInt(userid)
-        );
-        if (fildered_cartlist.length > 0) {
-          cartpage();
-        }
-      }
+      cartpage();
     } else {
       location.replace("/99-mobiles/pages/user/login.html");
     }
