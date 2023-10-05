@@ -99,11 +99,11 @@ const logout = () => {
   if ("cid" && "cname") {
     sessionStorage.removeItem("cid");
     sessionStorage.removeItem("cname");
-    location.replace("/pages/index.html");
+    location.replace("/99-mobiles/pages/index.html");
   } else if ("aid" && "uname") {
     sessionStorage.removeItem("aid");
     sessionStorage.removeItem("uname");
-    location.replace("/pages/index.html");
+    location.replace("/99-mobiles/pages/index.html");
   }
 };
 
@@ -123,55 +123,45 @@ window.addEventListener("load", () => {
   if (!localStorage.getItem("products")) {
     localStorage.setItem("products", JSON.stringify(Items));
   }
-  if (location.pathname === "/pages/user/home.html") {
+  if (location.pathname === "/99-mobiles/pages/user/home.html") {
     if (sessionStorage.getItem("cid")) {
       uhome();
     } else {
-      location.replace("/pages/user/login.html");
+      location.replace("/99-mobiles/pages/user/login.html");
     }
   }
-  if (location.pathname === "/pages/admin/home.html") {
+  if (location.pathname === "/99-mobiles/pages/admin/home.html") {
     if (sessionStorage.getItem("aid")) {
       ahome();
     } else {
-      location.replace("/pages/admin/login.html");
+      location.replace("/99-mobiles/pages/admin/login.html");
     }
   }
 
-  if (location.pathname === "/pages/admin/add_product.html") {
+  if (location.pathname === "/99-mobiles/pages/admin/add_product.html") {
     if (sessionStorage.getItem("aid")) {
       const username = document.getElementById("username");
       const uname = sessionStorage.getItem("uname");
       username.innerText = `Welcome ${uname}`;
     }
 
-    // let params = new URL(document.location).searchParams;
-    // let productId = params.get("id");
-    // console.log(productId);
-    // if (productId) {
-    //   const products = JSON.parse(localStorage.getItem("products"));
-    //   const product = products.find(
-    //     (name) => name.id === parseInt(productId)
-    //   );
-    //   console.log(product);
-    //   populateProduct(product);
-    // }
+    
   }
 
-  if (location.pathname === "/pages/user/cart.html") {
+  if (location.pathname === "/99-mobiles/pages/user/cart.html") {
     if (sessionStorage.getItem("cid")) {
       cartpage();
     } else {
-      location.replace("/pages/user/login.html");
+      location.replace("/99-mobiles/pages/user/login.html");
     }
   }
 
-  if (location.pathname === "/pages/user/orders.html") {
+  if (location.pathname === "/99-mobiles/pages/user/orders.html") {
     if (sessionStorage.getItem("cid")) {
       loadorder();
     }
   }
-  if (location.pathname === "/pages/admin/orders.html") {
+  if (location.pathname === "/99-mobiles/pages/admin/orders.html") {
     AdminOrderLoad();
   }
 });
@@ -236,7 +226,7 @@ const usignin = () => {
     } else if (validate) {
       sessionStorage.setItem("cid", validate.cid);
       sessionStorage.setItem("cname", validate.name);
-      location.replace("/pages/user/home.html");
+      location.replace("/99-mobiles/pages/user/home.html");
     }
   }
 };
@@ -276,7 +266,7 @@ const Asignin = () => {
     if (Avalidate) {
       sessionStorage.setItem("aid", Avalidate.aid);
       sessionStorage.setItem("uname", Avalidate.name);
-      location.replace("/pages/admin/home.html");
+      location.replace("/99-mobiles/pages/admin/home.html");
     } else if (!Avalidate) {
       errorMessage = "Enter the Valid Credentials";
       msg.innerHTML = `
@@ -327,7 +317,7 @@ const signUp = () => {
     });
 
     localStorage.setItem("users", JSON.stringify(user));
-    location.href = "/pages/user/login.html";
+    location.href = "/99-mobiles/pages/user/login.html";
   }
 };
 
@@ -397,68 +387,41 @@ const ahome = () => {
 
   username.innerText = `Welcome ${uname}`;
 };
-// const populateProduct = (product) => {
-//   const name = document.getElementById("pname");
-//   const price = document.getElementById("pprice");
-//   const image = document.getElementById("image");
-//   const idref = document.getElementById("pid");
-//   const btnref = document.getElementById("btn");
-//   console.log(product);
-//   idref.value = product.pid;
-//   name.value = product.pname;
-//   price.value = product.pprice;
-//   image.value = product.image;
-//   btnref.innerText = "Update Product ";
-// };
-
+// 
 const deleteprod = (pid) => {
   let products = JSON.parse(localStorage.getItem("products"));
   let filterproduct = products.filter((prodid) => prodid.pid !== pid);
   localStorage.setItem("products", JSON.stringify(filterproduct));
   ahome();
 };
-// const editprod = (id) => {
-//   location.href = `/pages/admin/add_product.html?id=${id}`;
-// };
-
-// const Addproduct = () => {
-//   const name = document.getElementById("pname");
-//   const price = document.getElementById("pprice");
-//   const image = document.getElementById("image");
-//   const idref = document.getElementById("pid");
-//   let products = JSON.parse(localStorage.getItem("products"));
-//   let id = idref.value;
-//   if (id) {
-//     // const product = products.find((product) => product.id === parseInt(id));
-//     // products = products.filter((product) => product.id !== parseInt(id));
-//     // products.push({
-//     //   ...product,
-//     //   pid: idref.value,
-//     //   pname: name.value,
-//     //   price: price.value,
-//     //   image: image.value,
-//     // });
-//   } else {
-//     products.push({
-//       pid: getRandomId("products"),
-//       pname: name.value,
-//       price: price.value,
-//       image: image.value,
-//     });
-//   }
-//   localStorage.setItem("products", JSON.stringify(products));
-//   location.replace("/pages/admin/home.html");
-// };
+//
+const Addproduct = () => {
+  const name = document.getElementById("pname");
+  const price = document.getElementById("pprice");
+  const image = document.getElementById("image");
+  const idref = document.getElementById("pid");
+  let products = JSON.parse(localStorage.getItem("products"));
+  let id = idref.value;
+  
+    products.push({
+      pid: getRandomId("products"),
+      pname: name.value,
+      price: price.value,
+      image: image.value,
+    });
+  localStorage.setItem("products", JSON.stringify(products));
+  location.replace("/99-mobiles/pages/admin/home.html");
+};
 
 const addtocart = (id) => {
   let products = JSON.parse(localStorage.getItem("products"));
   const product = products.find((product) => product.pid === parseInt(id));
   if (!sessionStorage.getItem("cid")) {
-    location.replace("/login.html");
+    location.replace("/99-mobiles/login.html");
   } else {
     let userId = parseInt(sessionStorage.getItem("cid"));
     let cart = [];
-    // console.log(cart.length);
+//
     if (localStorage.getItem("cart")) {
       cart = JSON.parse(localStorage.getItem("cart"));
     }
@@ -550,7 +513,7 @@ const checkout = (id) => {
       );
       localStorage.setItem("cart", JSON.stringify(updated_cartlist));
       localStorage.setItem("order", JSON.stringify(order));
-      location.href = `/pages/user/home.html`;
+      location.href = `/99-mobiles/pages/user/home.html`;
     }
   }
 };
