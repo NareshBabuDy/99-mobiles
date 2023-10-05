@@ -144,13 +144,20 @@ window.addEventListener("load", () => {
       const uname = sessionStorage.getItem("uname");
       username.innerText = `Welcome ${uname}`;
     }
-
-    
   }
 
   if (location.pathname === "/99-mobiles/pages/user/cart.html") {
     if (sessionStorage.getItem("cid")) {
-      cartpage();
+      if (localStorage.getItem("cart")) {
+        const cartlist = JSON.parse(localStorage.getItem("cart"));
+
+        const fildered_cartlist = cartlist.filter(
+          (c) => c.userId === parseInt(userid)
+        );
+        if (fildered_cartlist.length > 0) {
+          cartpage();
+        }
+      }
     } else {
       location.replace("/99-mobiles/pages/user/login.html");
     }
@@ -387,7 +394,7 @@ const ahome = () => {
 
   username.innerText = `Welcome ${uname}`;
 };
-// 
+//
 const deleteprod = (pid) => {
   let products = JSON.parse(localStorage.getItem("products"));
   let filterproduct = products.filter((prodid) => prodid.pid !== pid);
@@ -402,13 +409,13 @@ const Addproduct = () => {
   const idref = document.getElementById("pid");
   let products = JSON.parse(localStorage.getItem("products"));
   let id = idref.value;
-  
-    products.push({
-      pid: getRandomId("products"),
-      pname: name.value,
-      price: price.value,
-      image: image.value,
-    });
+
+  products.push({
+    pid: getRandomId("products"),
+    pname: name.value,
+    price: price.value,
+    image: image.value,
+  });
   localStorage.setItem("products", JSON.stringify(products));
   location.replace("/99-mobiles/pages/admin/home.html");
 };
@@ -421,7 +428,7 @@ const addtocart = (id) => {
   } else {
     let userId = parseInt(sessionStorage.getItem("cid"));
     let cart = [];
-//
+    //
     if (localStorage.getItem("cart")) {
       cart = JSON.parse(localStorage.getItem("cart"));
     }
@@ -457,10 +464,10 @@ const cartpage = () => {
     if (localStorage.getItem("cart")) {
       const cartlist = JSON.parse(localStorage.getItem("cart"));
 
-      let body = "";
       const fildered_cartlist = cartlist.filter(
         (c) => c.userId === parseInt(userid)
       );
+      let body = "";
       let grandtotal = 0;
       for (let product of fildered_cartlist) {
         grandtotal += parseInt(product.price * product.count);
@@ -572,18 +579,17 @@ const AdminOrderLoad = () => {
     `;
     orderbody.innerHTML = body;
   }
-  for(let order of orders){
+  for (let order of orders) {
     const statusRef = document.getElementById(`${order.customerid}`);
     statusRef.value = order.status;
     statusRef.addEventListener("change", () => {
-      const editedstatus =JSON.parse(localStorage.getItem("order"));
+      const editedstatus = JSON.parse(localStorage.getItem("order"));
       const updatedstatus = editedstatus.map((stat) => {
-        if(stat.customerid === order.customerid){
-          return {...stat, status: statusRef.value}
-        }
-        else return stat;
+        if (stat.customerid === order.customerid) {
+          return { ...stat, status: statusRef.value };
+        } else return stat;
       });
-      localStorage.setItem("order", JSON.stringify(updatedstatus)); 
+      localStorage.setItem("order", JSON.stringify(updatedstatus));
     });
   }
 };
