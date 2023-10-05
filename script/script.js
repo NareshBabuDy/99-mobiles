@@ -99,11 +99,11 @@ const logout = () => {
   if ("cid" && "cname") {
     sessionStorage.removeItem("cid");
     sessionStorage.removeItem("cname");
-    location.replace("/99-mobiles/pages/index.html");
+    location.replace("/99-mobiles/");
   } else if ("aid" && "uname") {
     sessionStorage.removeItem("aid");
     sessionStorage.removeItem("uname");
-    location.replace("/99-mobiles/pages/index.html");
+    location.replace("/99-mobiles/");
   }
 };
 
