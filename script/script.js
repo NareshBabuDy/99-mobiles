@@ -417,7 +417,7 @@ const addtocart = (id) => {
   let products = JSON.parse(localStorage.getItem("products"));
   const product = products.find((product) => product.pid === parseInt(id));
   if (!sessionStorage.getItem("cid")) {
-    location.replace("/99-mobiles/login.html");
+    location.replace("/99-mobiles/index.html");
   } else {
     let userId = parseInt(sessionStorage.getItem("cid"));
     let cart = [];
